@@ -24,11 +24,11 @@ class Player:
             dx += -speed_cos
             dy += -speed_sin
         if keys[pg.K_d]:
-            dx += -speed_cos
-            dy += speed_sin
-        if keys[pg.K_a]:
             dx += speed_cos
             dy += -speed_sin
+        if keys[pg.K_a]:
+            dx += -speed_cos
+            dy += speed_sin
 
         self.check_wall_collision(dx, dy)
 
@@ -42,9 +42,10 @@ class Player:
         return (x, y) not in self.game.map.world_map
     
     def check_wall_collision(self, dx, dy):
-        if self.check_wall(int(self.x + dx), int(self.y)):
+        scale = PLAYER_SIZE_SCALE / self.game.delta_time
+        if self.check_wall(int(self.x + dx * scale), int(self.y)):
             self.x += dx
-        if self.check_wall(int(self.x), int(self.y + dy)):
+        if self.check_wall(int(self.x), int(self.y + dy * scale)):
             self.y += dy
 
     def draw(self):
